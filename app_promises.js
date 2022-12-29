@@ -1,3 +1,5 @@
+const { resolve } = require("path")
+
 const users=[
     {
         email:'user1@gmail.com'
@@ -52,7 +54,18 @@ const login=(email)=>{
             },2000);
         })
 }
-
-login('user1@gmailiiii.com')
-.then(data=>{console.log('success:',data)})
+const getPosts=(email)=>{
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            const postsUser=posts.filter(element=>element.user==email);
+            resolve(postsUser)
+        },2000);
+    })
+}
+login('user1@gmail.com')
+.then(data=>{
+            console.log('success:',data);
+            return getPosts(data.email)
+            })
+.then(data=>console.table(data))
 .catch(err=>console.log(err))

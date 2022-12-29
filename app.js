@@ -70,5 +70,12 @@ const getNotes=(email,success)=>{
 let res = login('user1@gmail.com',
             (e)=>{
                 console.log("reussi email : ",e)
-                 },
-                 (error)=>console.log(error))
+                getPosts(e,(e,data)=>
+                    {
+                    console.table(data);
+                    getNotes(e,(e,data)=>
+                                {
+                                console.table(data);
+                                })
+                    })
+        },(error)=>console.log(error))
