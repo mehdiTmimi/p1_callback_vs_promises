@@ -55,7 +55,27 @@ const login=(email,success,echec)=>{
     },2000)
     
 }
-let res = login('user1@gmail.coom',(e)=>{
-    console.log("reussi email : ",e)
-    //liste des posts
-},(error)=>console.log(error))
+const getPosts=(email,success)=>{
+    setTimeout(()=>{
+        const postsUser=posts.filter(element=>element.user==email);
+        success(email,postsUser);
+    },2000);
+}
+const getNotes=(email,success)=>{
+    setTimeout(()=>{
+        const noteUsers=notes.filter(element=>element.user==email);
+        success(email,noteUsers);
+    },2000);
+}
+let res = login('user1@gmail.com',
+            (e)=>{
+                console.log("reussi email : ",e)
+                getPosts(e,(e,data)=>
+                    {
+                    console.table(data);
+                    getNotes(e,(e,data)=>
+                                {
+                                console.table(data);
+                                })
+                    })
+        },(error)=>console.log(error))
