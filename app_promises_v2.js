@@ -58,10 +58,7 @@ const getPosts=(email)=>{
     return new Promise((resolve,reject)=>{
         setTimeout(()=>{
             const postsUser=posts.filter(element=>element.user==email);
-            resolve({
-                email:email,
-                posts:postsUser
-            })
+            resolve(postsUser)
         },2000);
     })
 }
@@ -69,25 +66,24 @@ const getNotes=(email)=>{
     return new Promise((resolve,reject)=>{
         setTimeout(()=>{
             const notesUser=notes.filter(element=>element.user==email);
-            resolve({
-                email:email,
-                notes:notesUser
-            })
+            resolve(notesUser)
         },2000);
     })
 }
-login('user2@gmail.com')
-.then(data=>{
-            console.log('success:',data);
-            return getPosts(data.email)
-            })
-.then(data=>{
-            console.table(data.posts);
-            return getNotes(data.email);
-            })
-.then(data=>{console.table(data.notes);
-    console.log("1")})
-//.then(({posts})=>console.table(posts)) // object destructing
-.catch(err=>console.log(err))
-
-//const res  = await Promise.race([])
+const teste = async (email)=>{
+    try{
+    const user = await login(email);
+    console.log(user);
+    const postsUser= await getPosts(email);
+    console.table(postsUser);
+    const notesUser = await getNotes(email);
+    console.table(notesUser)
+    console.log('1')
+    }
+    catch(e)
+    {
+        console.log("here")
+        throw new Error(e)
+    }
+}
+teste('user1@gmrrail.com').then(data=>console.log(data)).catch(e=>console.log(e))
