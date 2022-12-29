@@ -58,14 +58,33 @@ const getPosts=(email)=>{
     return new Promise((resolve,reject)=>{
         setTimeout(()=>{
             const postsUser=posts.filter(element=>element.user==email);
-            resolve(postsUser)
+            resolve({
+                email:email,
+                posts:postsUser
+            })
         },2000);
     })
 }
-login('user1@gmail.com')
+const getNotes=(email)=>{
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            const notesUser=notes.filter(element=>element.user==email);
+            resolve({
+                email:email,
+                notes:notesUser
+            })
+        },2000);
+    })
+}
+login('user2@gmail.com')
 .then(data=>{
             console.log('success:',data);
             return getPosts(data.email)
             })
-.then(data=>console.table(data))
+.then(data=>{
+            console.table(data.posts);
+            return getNotes(data.email);
+            })
+.then(data=>console.table(data.notes))
+//.then(({posts})=>console.table(posts)) // object destructing
 .catch(err=>console.log(err))
